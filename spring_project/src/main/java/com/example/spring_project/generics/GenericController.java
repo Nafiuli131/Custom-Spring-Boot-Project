@@ -46,4 +46,14 @@ public class GenericController<T extends BaseEntity> {
         genericService.deleteById(id);
         return new ResponseEntity<>("Delete Successfully!", HttpStatus.OK);
     }
+
+    @GetMapping("/asc/{page}/{pageSize}")
+    public PaginationResponseDto<T> paginationWithSortingAsc(@PathVariable int page,@PathVariable int pageSize){
+        return genericService.paginationWithSortingAsc(page,pageSize);
+    }
+
+    @GetMapping("/desc/{page}/{pageSize}")
+    public PaginationResponseDto<T> paginationWithSortingDesc(@PathVariable int page,@PathVariable int pageSize){
+        return genericService.paginationWithSortingDesc(page,pageSize);
+    }
 }

@@ -33,4 +33,30 @@ public class GenericService<T extends BaseEntity> {
     public void deleteById(Long id) throws Exception {
         genericRepository.deleteById(id);
     }
+
+    public PaginationResponseDto<T> paginationWithSortingAsc(int page, int pageSize) {
+        int adjustedPage = page - 1;
+        Page<T> pageResult = genericRepository.findAll(PageRequest.of(adjustedPage, pageSize)
+                .withSort(Sort.by("id").ascending()));
+        PaginationResponseDto<T> paginationResponseDto = new PaginationResponseDto<>();
+        paginationResponseDto.setContent(pageResult.getContent());
+        paginationResponseDto.setPageNumber(pageResult.getNumber() + 1);
+        paginationResponseDto.setPageSize(pageResult.getSize());
+        paginationResponseDto.setTotalPage(pageResult.getTotalPages());
+        paginationResponseDto.setTotalContent(pageResult.getTotalElements());
+        return paginationResponseDto;
+    }
+
+    public PaginationResponseDto<T> paginationWithSortingDesc(int page, int pageSize) {
+        int adjustedPage = page - 1;
+        Page<T> pageResult = genericRepository.findAll(PageRequest.of(adjustedPage, pageSize)
+                .withSort(Sort.by("id").descending()));
+        PaginationResponseDto<T> paginationResponseDto = new PaginationResponseDto<>();
+        paginationResponseDto.setContent(pageResult.getContent());
+        paginationResponseDto.setPageNumber(pageResult.getNumber() + 1);
+        paginationResponseDto.setPageSize(pageResult.getSize());
+        paginationResponseDto.setTotalPage(pageResult.getTotalPages());
+        paginationResponseDto.setTotalContent(pageResult.getTotalElements());
+        return paginationResponseDto;
+    }
 }

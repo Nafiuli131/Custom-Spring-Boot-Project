@@ -1,5 +1,8 @@
 package com.example.spring_project.security.service;
 
+import com.example.spring_project.exception.ApiExceptionHandler;
+import com.example.spring_project.exception.BadExceptionHandler;
+import com.example.spring_project.exception.ResourceNotFoundExceptionHandler;
 import com.example.spring_project.security.config.SecurityConfig;
 import com.example.spring_project.security.dto.UserDto;
 import com.example.spring_project.security.entity.Role;
@@ -71,11 +74,11 @@ public class UserService implements UserDetailsService {
 
     public String signIn(String email, String password, Set<Role> roles) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundExceptionHandler("User not found"));
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new RuntimeException("Invalid password");
+            throw new ResourceNotFoundExceptionHandler("Invalid password");
         }
-        return jwtTokenUtil.generateToken(user.getUserName(), roles, user.getEmail());
+        return jwtTokenUtil.generateToken(user.getUserName(), user.getRoles(), user.getEmail());
     }
 
 

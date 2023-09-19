@@ -55,6 +55,11 @@ public class UserService implements UserDetailsService {
     }
 
     public UserDto signUp(UserDto userDto) {
+
+        Optional<User> checkUser = userRepository.findByEmail(userDto.getEmail());
+        if(checkUser.isPresent()){
+            throw new  BadExceptionHandler("Same user exists");
+        }
         User user = new User();
         user.setUserName(userDto.getUserName());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));

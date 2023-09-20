@@ -35,8 +35,7 @@ public class AuthController {
     public ResponseEntity<JwtResponse> signIn(@RequestBody JwtRequest jwtRequest) {
         String userEmail = jwtRequest.getUserEmail();
         String password = jwtRequest.getPassword();
-        Set<Role> role = jwtRequest.getRole();
-        String token = userService.signIn(userEmail, password, role);
+        String token = userService.signIn(userEmail, password);
         UserDto userDetails = userService.findByUserEmail(userEmail);
         return ResponseEntity.ok(new JwtResponse(token, userDetails));
     }

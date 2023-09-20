@@ -9,5 +9,4 @@ import java.util.Set;
 public class JwtRequest {
     private String userEmail;
     private String password;
-    private Set<Role> role;
 }

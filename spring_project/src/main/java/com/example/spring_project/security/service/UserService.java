@@ -77,7 +77,7 @@ public class UserService implements UserDetailsService {
         return userDto;
     }
 
-    public String signIn(String email, String password, Set<Role> roles) {
+    public String signIn(String email, String password) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundExceptionHandler("User not found"));
         if (!passwordEncoder.matches(password, user.getPassword())) {

@@ -83,7 +83,7 @@ public class UserService implements UserDetailsService {
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new ResourceNotFoundExceptionHandler("Invalid password");
         }
-        return jwtTokenUtil.generateToken(user.getUserName(), user.getRoles(), user.getEmail());
+        return jwtTokenUtil.generateToken(user.getUserName(), user.getRoles(), user.getEmail(),user.getId());
     }
 
 

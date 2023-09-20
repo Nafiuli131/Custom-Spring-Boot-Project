@@ -20,11 +20,12 @@ public class JwtTokenUtil {
     private final Key jwtSecretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256); // Generate a secure key
     private final int jwtExpiration = 86400; // Token expiration time in seconds (24 hours)
 
-    public String generateToken(String username, Set<Role> roleSet, String email) {
+    public String generateToken(String username, Set<Role> roleSet, String email, Long id) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", roleSet);
         claims.put("email",email);
         claims.put("name",username);
+        claims.put("userId",id);
         return createToken(claims, email);
     }
 
